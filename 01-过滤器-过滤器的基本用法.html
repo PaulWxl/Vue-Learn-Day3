@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 注意， 过滤器的用法， 在 vue3 中 被淘汰了， 无法使用， 只能在 vue2 中使用 过滤器。不再把过滤器当做重点学习了。 会过滤器最基础的用法 即可。  -->
+
+    <!-- 过滤器 过滤器（Filters）是vue 为开发者提供的功能，常用于文本的格式化。过滤器可以用在两个地方：插值表达式和v-bind 属性绑定。过滤器应该被添加在JavaScript 表达式的尾部，由“管道符”进行调用，示例代码如下： 
+    
+    -->
+
+
+    <!-- 在双花括号中通过 “管道符” 调用 capitalize 过滤器， 对 message 的 值 进行 格式化。  -->
+    <!-- | 的 作用就是代表  要 调用一个 过滤器 函数 。注意， 过滤器 的 本质 就是一个 函数。先把 message 作为 参数， 传递给 过滤器。 然后  过滤器 的 返回值 再 渲染到 p标签 内部。   -->
+    <!-- vue 中 把 | 称为 管道符  -->
+    <!-- <p>{{ message | capitalize }}</p> -->
+
+    <!-- 在 v-bind 中 通过 “管道符” 调用 formatId 过滤器， 对 rawId 的值 进行 格式化  -->
+    <!-- <div v-bind:id="rawId | formatId"></div> -->
+
+
+
+
+    <!-- ## 过滤器
+
+
+
+    ### 过滤器的注意点
+
+    1. 要定义到 filters 节点下 (和 data 同级 )，**本质是一个函数**
+    2. 在过滤器函数中，**一定要有 return 值**
+    3. 在过滤器的形参中，可以获取到“管道符”（|）前面待处理的那个值
+    4. 如果全局过滤器和私有过滤器名字一致，此时按照“**就近原则**”，调用的是”私有过滤器“ -->
+
+
+    <div id="app">
+        <p> message 的 值为： {{ message | capi}}</p>
+    </div>
+
+
+
+    
+
+
+
+
+
+    <script src="./lib/vue-2.6.12.js"> </script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello-----Vue.js'
+            },
+            // 过滤器函数，必须被定义到 filters 节点之下
+            // 过滤器本质上是函数
+            filters: {
+                // 注意：过滤器函数形参中的 val，永远都是“管道符”前面的那个值
+                capi(val) {
+                   // 字符串有 charAt 方法，这个方法接收索引值，表示从字符串中把索引对应的字符，获取出来
+                   // toUpperCase() 转换成 大写 字母
+                   // 把 第一个 字母 和 最后一个 字母 转换为 大写字母
+                   const first = val.charAt(0).toUpperCase()
+
+                   const last = val.charAt(val.length - 1).toUpperCase()
+                   // 字符串的 slice 方法，可以截取字符串，从指定索引往后截取， 接受 两个 参数， 第一个 参数 是 索引， 从这个 索引 开始， 第二个参数 是 长度，要 截取 的 子串 的 长度， 如果 省略 长度， 则 截取到 字符串 的 末尾。
+                   const other = val.slice(1, val.length - 1)
+                    // 强调：过滤器中，一定要有一个返回值
+                    // 把 first(第一个 大写字母) 和 other(中间的) 和 last(最后的) 拼接 起来。
+                    return first + other + last
+ 
+
+                }
+            }
+
+
+        })
+    </script>
+</body>
+</html>

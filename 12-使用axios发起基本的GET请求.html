@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- ## axios
+
+   > axios 是一个专注于网络请求的库！ 不负责 操作 DOM BOM ， 只 负责 拿数据， 和 发请求。 
+
+    在 Vue 和 React 中 发请求 都用 axios。 不用 jquery。 -->
+
+
+   <!-- ### axios 的基本使用
+
+
+
+    0. axios 的基础语法
+
+        axios({
+	      method: '请求的类型',
+	      url: '请求地址',
+        }).then( result => {
+	    // .then 用来指定请求成功后的回调函数
+	    // .then 中的参数 是 请求成功 后 的 回调函数
+	    // result 是从服务器 返回 的 数据
+	    ...
+        } )
+
+
+    1. 发起 GET 请求：
+
+    axios({
+        // 请求方式
+        method: 'GET',
+        // 请求的地址
+        url: 'http://www.liulongbin.top:3006/api/getbooks',
+        // URL 中的查询参数
+        // params : 参数项 属性 可选
+
+        params: {
+          id: 1
+        }
+      }).then(function (result) {
+        console.log(result)
+      })
+
+
+      2、 发起 POST 请求：
+
+      document.querySelector('#btnPost').addEventListener('click', async function () {
+        // 如果调用某个方法的返回值是 Promise 实例，则前面可以添加 await！
+        // await 只能用在被 async “修饰”的方法中
+        const { data: res } = await axios({
+          method: 'POST', 
+          url: 'http://www.liulongbin.top:3006/api/post',
+          data: {
+            name: 'zs',
+            age: 20
+          }
+        })
+      
+        console.log(res)
+      }) -->
+
+
+      <!-- 要 先引入 axios.js 文件  -->
+      <script src="./lib/axios.js"></script>
+
+      <script>
+
+            console.log(axios)
+
+            axios({
+                methods: 'GET',
+                url: 'http://www.liulongbin.top:3006/api/getbooks',
+                // params:  URL 中的查询参数
+                params: {
+                    id: 1
+                },
+                // 请求体参数
+                data: {
+
+                }
+            }).then( result => {
+                console.log(result.data)// status 会 包含在 data 里面， 外面 的 status 会 单独 再有一个
+                console.log(result.status)// 也是 200
+            } )// 注意， result 并不是 服务器 中 真实 的 数据， result 里面的 data ，才是 服务器 的 真实 数据。 
+
+
+            // axios 在 请求到 数据 之后， 在外面追加了 一些 属性
+            // {
+            //     config: {},
+            //     header: {},
+            //     request: {},
+            //     status: xxx,
+            //     statusText: ''
+            // }
+
+
+
+            // const result =  axios({
+            //     methods: 'GET',
+            //     url: 'http://www.liulongbin.top:3006/api/getbooks',
+            //     // params:  URL 中的查询参数
+            //     params: {
+            //         id: 1
+            //     },
+            //     // 请求体参数
+            //     data: {
+
+            //     }
+            // })
+
+            // console.log(result) // 得到的 是 Promise 对象 ， Promise 对象 可以 调用 .then 方法 
+
+
+
+      </script>
+
+</body>
+</html>

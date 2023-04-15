@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 2.2 私有过滤器和全局过滤器 在filters 节点下定义的过滤器，称为“私有过滤器”，因为它只能在当前vm 实例所控制的el 区域内使用。如果希望在多个vue 实例之间共享过滤器，则可以按照如下的格式定义全局过滤器：
+    
+        // 全局过滤器 独立于每个 vm 实例 之外
+        // Vue.filter() 方法接收两个参数：第1个参数， 是 全局过滤器 的 “名字”， 第2个参数， 是 全局过滤器 的 “处理函数”
+        Vue.filter('capitalize', (str) => {
+            return str.charAt(0).toUpperCase() + str.slice(1) + '~~~'
+        })
+
+
+    如果 区域 自己 定义了 过滤器（filters节点）， 则 不会 调用 全局过滤器， 只有 在 自己 没有 定义 filters节点 的 情况下， 才会 调用  全局过滤器。 
+
+
+    全局过滤器 用的比 私有过滤器 多。 几乎 很少 使用 私有过滤器。 
+    -->
+
+    <div id="app">
+        <p> message 的 值为： {{ message | capi}}</p>
+    </div>
+    <!-- 区域1 调用的是 自己的过滤器（私有过滤器） 因为他自己 本身 定义了 filters  -->
+
+
+    <!-- 第二块需要被 vue实例 控制 的 区域 -->
+    <div id="app2">
+        <p> message 的 值为： {{ message | capi}}</p>
+    </div>
+    <!-- 区域2 调用的是 全局过滤器 因为他自己 本身 没有 定义 filters  -->
+    
+
+
+
+
+
+    <script src="./lib/vue-2.6.12.js"> </script>
+    <script>
+        // 使用 Vue.filter() 定义全局过滤器(与 定义 vue 实例 同级)
+        Vue.filter('capi', (str) => {
+            const first = str.charAt(0).toUpperCase()
+            const other = str.slice(1)
+            return first + other + '~~~'
+        })
+
+
+
+
+
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                message: 'hello-----Vue.js'
+            },
+            filters: {
+                capi(val) {
+                   const first = val.charAt(0).toUpperCase()
+
+                   const last = val.charAt(val.length - 1).toUpperCase()
+
+                   const other = val.slice(1, val.length - 1)
+
+                   return first + other + last
+ 
+
+                }
+            }
+
+
+        })
+
+
+        // 创建 第二个 vue 实例
+        const vm2 = new Vue({
+            el: '#app2',
+            data: {
+                message: 'hello-----filters'
+            }
+        })
+    </script>
+</body>
+</html>

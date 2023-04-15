@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 注意， axios 发 POST 请求， 和 GET 请求 不一样。 
+    
+    // 如果调用某个方法的返回值是 Promise 实例，则可以在方法之前加 await！
+    // 只要 方法 内 用到了 await , 那么 这个方法 前面 一定要加一个 async 
+    // .then 可以 用 async , await 简化 ！
+    // 解构赋值 冒号 改名 ！！！ 给 data 改名了 ！！！ 今后 都 这么 用 ！！！ 一般 都 重命名 为 res ！！！
+
+
+
+    // axios({
+        methods: 
+    })   还有  axios.get(),    axios.post()   
+    -->
+
+    
+
+    <button id="btnGET">GET</button>
+    <button id="btnPOST">POST</button>
+
+    <script src="./lib/axios.js"></script>
+
+    <script>
+        const btnPOST = document.querySelector('#btnPOST')
+        btnPOST.addEventListener( 'click', async function() {
+            // 运用es6 的 解构赋值， 我只 关心 右侧 大对象中的  data 属性 （服务器 返回 的 真实 数据）， 所以 {data}
+            // 解构赋值 冒号 改名 ！！！ 给 data 改名了 ！！！ 今后 都 这么 用 ！！！ 一般 都 重命名 为 res ！！！
+            const {data: res} =  await axios({
+                methods: 'POST',
+                url: 'http://www.liulongbin.top:3006/api/post',// 这个接口 暂时失效
+            })
+             
+            
+            console.log(res.data)
+
+            //console.log(result) // result 身上 包含了 6个 属性， 其中 .data 才是 真实的 服务器 返回的 数据 （axios 会 多加 一层 外壳！ ）
+        })
+
+
+
+        
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 2.3 连续调用多个过滤器 过滤器可以串联地进行调用，例如： 
+        把 message 的值， 交给 filterA 进行处理， 再把 处理结果 交给 filterB 进行处理， 最终把 filterB 处理的 结果， 作为 最终的 结果 渲染到 页面 上。 
+
+        {{ message | filterA | filterB }}
+
+
+
+
+    2.3 连续调用多个过滤器示例代码如下。  
+
+
+    2.4 过滤器传参 过滤器的本质是JavaScript 函数，因此可以接收参数，格式如下：
+
+        
+
+
+    2.5 过滤器的兼容性 过滤器仅在vue 2.x 和1.x 中受支持，在vue 3.x的版本中剔除了过滤器相关的功能。在企业级项目开发中：⚫如果使用的是2.x 版本的vue，则依然可以使用过滤器相关的功能⚫如果项目已经升级到了3.x 版本的vue，官方建议使用计算属性或方法代替被剔除的过滤器功能 具体的迁移指南，请参考vue 3.x 的官方文档给出的说明：https://v3.vuejs.org/guide/migration/filters.html#migration-strategy
+
+        
+    -->
+
+    <!-- 串联调用多个过滤器 -->
+    <div id="app">
+        <p>{{ text | capitalize | maxLength(5) }}</p>
+
+        <!-- arg1 和 arg2 是传递给 filterA 的 参数  -->
+        <!-- <p>{{ text | filterA(arg1, arg2) }}</p> -->
+    </div>
+    
+
+    <script src="./lib/vue-2.6.12.js"></script>
+    <script>
+        // 全局过滤器 - 首字母大写
+        Vue.filter('capitalize', (str) => {
+            return str.charAt(0).toUpperCase() + str.slice(1) + '~~'
+        })
+
+        // 全局过滤器 - 控制文本的最大长度
+        Vue.filter('maxLength', (str, len ) => {
+            if (str.length <= len) return str
+            return str.slice(0, len) + '...'
+        })
+
+
+        // 过滤器处理函数的形参列表中：
+        // 第一个参数： 永远都是 “管道符” 前面 待处理的 值
+        // 第二个参数开始， 才是 调用 过滤器 时 传递过来的 arg1 和 arg2 参数
+        // Vue.filter('filterA', (msg, arg1, arg2) => {
+        //     //过滤器的代码逻辑
+        // })
+
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                text: 'hello-----Vue.js'
+            }
+        })
+    </script>
+</body>
+</html>

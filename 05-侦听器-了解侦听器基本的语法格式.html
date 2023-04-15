@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 
+        侦听器
+        计算属性
+        vue-cli
+        vue 组件
+
+
+    侦听器：监视 data 里面 某些 数据 的 变化， 只要 哪个 数据 变化 了， 就可以 在 监听器 中 做一些 事情。 （处理函数）
+
+    计算属性 的 本质 是 一个 属性， 只不过 属性值 是 通过 计算 得来 的。 
+
+    vue-cli 结合 webpack ， 一键生成 vue 项目 ， 不用 手动 配置 webpack。 
+
+    vue 组件， UI 结构 的 复用。 可 复用 的 UI 结构 封装 成 组件。 Vue 中 经常 使用 的 UI 结构 封装 成 Vue 组件。 
+
+
+
+
+
+    watch 侦听器：
+
+    1. 什么是watch 侦听器 watch 侦听器允许开发者监视数据的变化，从而针对数据的变化做特定的操作。语法格式如下：
+
+    data: {
+        username: ''
+    },
+    watch: {
+        // 你要 监听 谁， 就把 谁 当做 函数名 就可以了 。
+        // 要 监听 username 值 的 变化， 函数名 就叫 username 只要 username 的 值 变化， 就会 触发 这个 函数。 
+        // newVal 是 “变化后的 新值”， oldVal 是 “变化之前的 旧值” 
+        // Val：Value
+        username(newVal, oldVal) {
+            console.log(newVal, oldVal)
+        }
+    }
+    -->
+
+
+
+    <!-- 2. 使用 watch 检测用户名是否可用 监听username值的变化，并使用 axios 发起Ajax 请求，检测当前输入的用户名是否可用：  
+        watch:{
+            // 监听username值的变化
+            async username(newVal) {
+                if (newVal==='') return
+                // 使用axios发起请求，判断用户名是否可用
+                const {data:res} = await axios.get('https://www.escook.cn/api/finduser/'+newVal)
+                console.log(res)
+            }
+        } 
+            -->
+
+
+
+    <!-- 监听器 最基本 的 语法 格式： 
+    
+        watch: {
+            // 需要注意的是， 参数 设置 时 必须 新值（newVal） 在 前， 旧值(oldVal) 在 后, 否则 会 发生 顺序混乱 的 错误。 尽量 避免 这种 情况 出现。  
+            username(newVal, oldVal) {
+                console.log('username 的 值 发生 了 变化', newVal, oldVal) 
+            }
+        }-->
+     
+
+
+    <div id="app">
+        <input type="text" v-model.lazy="username">
+    </div>
+
+    <script src="./lib/vue-2.6.12.js"></script>
+    <script src="./lib/jquery-v3.6.0.js"></script>
+
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                username: 'zhangsan'
+            },
+            watch: {
+                username(newVal, oldVal ) {
+                    // console.log('username 的 值 发生 了 变化', oldVal, newVal)
+                    if (newVal === '') return
+                    // 1. 调用 jQuery 中的 Ajax 发起请求，判断 newVal 是否被占用！！！(调用 jquery 之前 必须 先 引入 jquery-v3.6.0.js 文件 。)
+                    // $.get(
+                    //     url,
+                    //     data,
+                    //     success,
+                    //     dataType
+                    // );
+                    // 在 $.get() 方法中，url 和 success 是必写参数，而 data 和 dataType 是可选参数。
+                    // url 参数指定请求的URL地址，必须要有。如果不写，请求会被发送到当前页面的URL。
+                    // success 参数是请求成功后的回调函数，也必须要有。这个回调函数的参数是从服务器返回的数据，它可以是字符串、XML文档、JSON对象或数组等类型。
+                    // data 参数是要发送给服务器的参数。如果没有参数需要发送，可以不写。它可以是对象，也可以是字符串形式的键值对。
+                    // dataType 参数是服务器返回的数据类型，如果不指定，则 jQuery 会根据 MIME 类型的返回值自动识别。通常我们需要指定为 JSON，XML，HTML 或 text 等一种类型。
+                    $.get('https://www.escook.cn/api/finduser/' + newVal, function(result) {
+                        console.log(result)// result 为 从 服务器 返回 的 数据
+                    })
+
+                }
+            }
+
+        })
+    </script>
+
+</body>
+</html>

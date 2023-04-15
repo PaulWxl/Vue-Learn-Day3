@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+    <div id="app">
+        <input type="text" v-model.lazy="info.username">
+    </div>
+
+
+<script src="./lib/vue-2.6.12.js"></script>
+<script src="./lib/jquery-v3.6.0.js"></script>
+
+<script>
+
+// 如果侦听的是一个对象，如果对象中的属性发生了变化，不会触发侦听器！！！
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            // 用户的信息对象
+            info: {
+                username: 'zhangsan',
+                address: {
+                    city: '北京'
+                }
+            }
+        },
+        watch: {
+            // info 是一个 对象， 用 函数形式 的 侦听器， 无法 监听 内部 属性 的 变化， 所以 需要 用 对象形式 的 侦听器, 注意 需要 搭配 handler函数 和  deep 属性 
+            // 可以通过 **deep** 选项，让侦听器深度监听对象中每个属性的变化！！
+            // info(newVal) {
+            //     console.log(newVal)
+            // }
+            info: {
+                handler(newVal) {
+                    console.log(newVal)
+                },
+                //deep 深度监听 属性 true 表示 开启
+                // 开启深度监听，只要对象中任何一个属性变化了，都会触发“对象的侦听器”
+                deep: true
+            }
+        }
+        
+    })
+</script>
+
+
+
+
+
+</body>
+</html>

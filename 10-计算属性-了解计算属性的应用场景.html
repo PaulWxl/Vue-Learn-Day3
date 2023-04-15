@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: #000;
+        }
+    </style>
+</head>
+<body>
+    <!-- 1. 什么是计算属性 计算属性指的是通过一系列运算之后，最终得到一个属性值。这个动态计算出来的属性值可以被模板结构或 methods 方法使用。示例代码如下： -->
+
+
+
+    <!-- 这一节 都不是 计算属性， 为了 引入 计算属性 用的 
+    若 一段 代码 出现频率 极高， 多个地方 都 使用到了， 就 想办法  增强 他的 复用性， 也 就是 计算属性。  -->
+
+    <div id="app">
+        <!-- input文本框中的值应该双向数据绑定，用v-model=, 又因为 只能为数字型的 ， 所以  应该 v-model.number =  -->
+        <label for="red">R:</label>
+        <input type="text" name="red" id="red" v-model.number="r" ><br>
+        <label for="green">G:</label>
+        <input type="text" name="green" id="green" v-model.number="g"><br>
+        <label for="blue">R:</label>
+        <input type="text" name="blue" id="blue" v-model.number="b">
+        <hr>
+
+
+
+        <!-- rgb() 必须 被 整个 模板字符串 包住 ， 而不是r，g，b 本身  -->
+        <!-- 专门用户呈现颜色的 div 盒子 -->
+        <!-- 在属性身上，: 代表  v-bind: 属性绑定 -->
+        <!-- :style 代表动态绑定一个样式对象，它的值是一个 {  } 样式对象 -->
+        <!-- 当前的样式对象中，只包含 backgroundColor 背景颜色 -->
+        <!-- 整个 rgb 的 值 都 被 模板字符串 包住 -->
+        <!-- style 是 v-bind 数据驱动视图  -->
+        <!-- 注意， 这里 style 的 值 是 一个 样式对象 {}  -->
+        <div class="box" :style=" {
+            backgroundColor: `rgb(${r}, ${g}, ${b})`} ">
+        
+            {{ `rgb:(${r}, ${g}, ${b} )` }}
+        </div>
+        <br>
+
+        <button @click="show">点我</button>
+    </div>
+
+    
+    <script src="./lib/vue-2.6.12.js"></script>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                // r g b 红绿蓝 
+                r: '', g: '', b: ''
+            },
+            methods: {
+                show() {
+                    // 注意， methods 中 方法 如果 调用了 data对象 中 的 属性， 需要 加上 this，  this.属性名  才行。   
+                    alert(`你选择的 rgb(${this.r}, ${this.g}, ${this.b}) 真好看！`)
+                    console.log(`rgb(${this.r},${this.g},${this.b})`)
+                }
+            }
+
+            
+
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+
+
+<body>
+  <button id="btnGET">GET</button>
+  <button id="btnPOST">POST</button>
+
+  <script src="./lib/axios.js"></script>
+  <script>
+    document.querySelector('#btnGET').addEventListener('click', async function () {
+      /* axios.get('url地址', {
+        // GET 参数
+        params: {}
+      })   如果 不需要 加  参数 ， 就可以  省略  {}    */
+
+      // 运用es6 的 解构赋值， 我只 关心 右侧 大对象中的  data 属性 （服务器 返回 的 真实 数据）， 所以 {data}， 然后为了避免 {data.data} 的 尴尬情况， 所以 使用 {data.res} 
+      // axios.get('请求url地址',  {params: { } } )
+      // 以后 统一 用 axios 发 HTTP 请求， 不用 jquery 发 HTTP 请求。 
+      const { data: res } = await axios.get('http://www.liulongbin.top:3006/api/getbooks', {
+        // params ： url 查询 的 参数
+
+        /* axios.get('url地址', {
+        // GET 参数
+        params: {}
+        }) */
+        params: { 
+            id: 1 
+          }
+      })
+
+
+      console.log(res)
+    })
+
+
+    document.querySelector('#btnPOST').addEventListener('click', async function() {
+        // 第二个参数 是 对象， 里面可以 放 参数
+        // axios.post('url', { /* POST 请求体数据， 不用 加 data ， { } 里面 直接 写 */ })
+
+        const {data: res} = await axios.post('http://www.liulongbin.top:3006/api/post', {
+            name: 'zs',
+            gender: '女'
+        })
+    })
+
+   
+  </script>
+</body>
+
+</html>

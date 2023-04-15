@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 3. immediate 选项
+    默认情况下，组件在初次加载完毕后不会调用watch 侦听器。如果想让watch 侦听器 立即 被调用，则需要使用immediate选项。示例代码如下：
+    watch:
+    {
+        username:{
+        //handler是固定写法，表示当username的值变化时，自动调用handler处理函数handler:asyncfunction(newVal){
+            if(newVal==='') return
+            const {data:res} = await axios.get('https://www.escook.cn/api/finduser/'+newVal)
+            console.log(res)
+        },
+        //表示页面初次渲染好之后，就立即触发当前的watch侦听器
+        // 注意， username 不能 再 定义为 函数了， 因为 函数 形式 的 侦听器， 不会 立即 执行， 需要 把 username 定义 为 对象。
+        // 对象 内部 定义 handler 方法 （函数）
+        // immediate 和 handler  平级，  定义在 username 对象 内部 
+        immediate:true
+    }
+} -->
+
+
+<div id="app">
+    <input type="text" v-model.lazy="username">
+</div>
+
+<script src="./lib/vue-2.6.12.js"></script>
+<script src="./lib/jquery-v3.6.0.js"></script>
+
+<script>
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            username: 'zhangsan'
+        },
+        watch: {
+            // 定义对象格式的侦听器 内部 搭配 handler 处理函数 和 immediate
+            username: {
+                // 侦听器的处理函数 handler
+                handler(newVal) {
+                    if (newVal === '') return
+                    $.get('https://www.escook.cn/api/finduser/' + newVal, function(result) {
+                    console.log(result)
+                })
+                },
+                // immediate 函数 定义 在 username 对象 内部 
+                // immediate 选项的默认值是 false
+                // immediate 的作用是：控制侦听器是否自动触发一次！
+                immediate: true
+            },
+            
+        }
+
+    })
+</script>
+
+
+
+
+
+</body>
+</html>
